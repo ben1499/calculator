@@ -31,19 +31,31 @@ const buttons = document.querySelectorAll('button');
 const display = document.querySelector('.display');
 
 function populateDisplay(content) {
-    display.textContent = content;
+    display.textContent += content;
 }
+
+let flag = 0;
+let operatorFlag = 0;
 
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
-        if (this.classList.contains('number')) {
-            //let output = this.value;
-            display.textContent += this.value;
-        } else if (this.classList.contains('operator')) {
-            let firstNum = +(display.textContent);
-            console.log(firstNum);  
-        } else if (this.classList.contains('equals')) {
-    
+        if (button.classList.contains('number')) {
+            if (flag === 1) {
+                display.textContent = '';
+                flag = 0;
+            }
+            populateDisplay(button.value);
+        } else if (button.classList.contains('operator')) {
+            operator = button.value;
+            firstNum = +(display.textContent);
+            console.log(firstNum);
+            flag = 1;
+        } else if (button.classList.contains('equals')) {
+            secondNum = +(display.textContent);
+            console.log(secondNum);
+            display.textContent = '';
+            let result = operate(operator, firstNum, secondNum);
+            populateDisplay(result);
         }
     });
 });
