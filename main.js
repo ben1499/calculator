@@ -36,6 +36,9 @@ function populateDisplay(content) {
 
 let flag = 0;
 let operatorFlag = 0;
+let result;
+
+
 
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
@@ -46,15 +49,25 @@ buttons.forEach((button) => {
             }
             populateDisplay(button.value);
         } else if (button.classList.contains('operator')) {
+            if (operatorFlag == 1) {
+                secondNum = +(display.textContent);
+                result = operate(operator, firstNum, secondNum);
+                display.textContent = '';
+                populateDisplay(result);
+                console.log("Result" + result);
+                firstNum = +result;
+                operatorFlag = 0;
+            } 
             operator = button.value;
             firstNum = +(display.textContent);
             console.log(firstNum);
             flag = 1;
+            operatorFlag = 1;
         } else if (button.classList.contains('equals')) {
             secondNum = +(display.textContent);
             console.log(secondNum);
             display.textContent = '';
-            let result = operate(operator, firstNum, secondNum);
+            result = operate(operator, firstNum, secondNum);
             populateDisplay(result);
         }
     });
