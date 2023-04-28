@@ -27,18 +27,29 @@ function operate(operator, a, b) {
     }
 }
 
+
+
 const buttons = document.querySelectorAll('button');
 const display = document.querySelector('.display');
 
-function populateDisplay(content) {
-    display.textContent += content;
-}
+// document.addEventListener('DOMContentLoaded', () => {
+//     display.textContent = '0';
+//     console.log("Loaded");
+// })
+
+
+
 
 let flag = 0;   //to indicate second number
 let operatorFlag = 0;  //to indicate second operator
-let result;
+let result = 0;
+
+function populateDisplay(content = result) {
+    display.textContent += content;
+}
 
 
+populateDisplay();
 
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
@@ -47,12 +58,17 @@ buttons.forEach((button) => {
                 display.textContent = '';
                 flag = 0;
             }
+            let str = display.textContent;
+            
             populateDisplay(button.value);
         } else if (button.classList.contains('operator')) {
             if (operatorFlag == 1) {
                 secondNum = +(display.textContent);
                 result = operate(operator, firstNum, secondNum);
                 display.textContent = '';
+                if (isNaN(result)) {
+                    result = "Wrong format";
+                }
                 populateDisplay(result);
                 console.log("Result" + result);
                 firstNum = +result;
@@ -74,8 +90,16 @@ buttons.forEach((button) => {
                 result = 'Nice try!';
             }
             populateDisplay(result);
+            result = 0;
+            firstNum = 0;
+            secondNum = 0;
             
             
+        } else if (button.classList.contains('clear')) {
+            firstNum = 0;
+            secondNum = 0;
+            result = 0;
+            display.textContent = '';
         }
     });
 });
