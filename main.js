@@ -34,8 +34,8 @@ function populateDisplay(content) {
     display.textContent += content;
 }
 
-let flag = 0;
-let operatorFlag = 0;
+let flag = 0;   //to indicate second number
+let operatorFlag = 0;  //to indicate second operator
 let result;
 
 
@@ -68,7 +68,14 @@ buttons.forEach((button) => {
             console.log(secondNum);
             display.textContent = '';
             result = operate(operator, firstNum, secondNum);
+            if(result === undefined) {
+                result = secondNum;
+            } else if (result === Infinity || result === -Infinity) {
+                result = 'Nice try!';
+            }
             populateDisplay(result);
+            
+            
         }
     });
 });
