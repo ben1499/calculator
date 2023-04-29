@@ -42,14 +42,18 @@ const display = document.querySelector('.display');
 
 let flag = 0;   //to indicate second number
 let operatorFlag = 0;  //to indicate second operator
-let result = 0;
 
-function populateDisplay(content = result) {
+
+function populateDisplay(content) {
     display.textContent += content;
 }
 
+function getRounded(number) {
+    return (Math.round(number * 100000000)/100000000);
+}
 
-populateDisplay();
+
+
 
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
@@ -69,6 +73,7 @@ buttons.forEach((button) => {
                 if (isNaN(result)) {
                     result = "Wrong format";
                 }
+                result = getRounded(result);
                 populateDisplay(result);
                 console.log("Result" + result);
                 firstNum = +result;
@@ -89,7 +94,10 @@ buttons.forEach((button) => {
             } else if (result === Infinity || result === -Infinity) {
                 result = 'Nice try!';
             }
+            result = getRounded(result);
             populateDisplay(result);
+            flag = 0;
+            operatorFlag = 0;
             result = 0;
             firstNum = 0;
             secondNum = 0;
