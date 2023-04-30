@@ -7,11 +7,13 @@ body {
 }
 
 #container {
-    border: 5px solid #000;
+    border: 1px solid #000;
     width: 350px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    background-color: #F6F1F1;
+    padding: 10px 10px;
 }
 
 .display {
@@ -21,15 +23,48 @@ body {
     height: 50px;
     font-size: 50px;
     padding-top: 10px;
+    background-color: white;
+    border: 1px solid #000;
+    padding-right: 5px;
+}
+
+.keypad {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    
 }
 
 .row {
     flex: auto;
     display: flex;
+
+    display: flex;
+    gap: 5px;
+    
 }
 
 button {
     width: 50px;
     height: 60px;
     flex: auto;
+    font-size: 15px;
+}
+
+.clear {
+    background-color: #F2B6A0;
+    border: 1px solid #000;
+}
+
+.operator, .equals {
+    background-color: #F6BA6F;
+    border: 1px solid #000;
+}
+
+.clear:hover {
+    background-color: #F2B6A088;
+}
+
+.operator:hover, .equals:hover {
+    background-color: #F6BA6F88;
 }
