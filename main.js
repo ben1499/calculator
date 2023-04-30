@@ -42,17 +42,31 @@ const display = document.querySelector('.display');
 
 let flag = 0;   //to indicate second number
 let operatorFlag = 0;  //to indicate second operator
+let result = 0;
 
 
-function populateDisplay(content) {
-    display.textContent += content;
+function populateDisplay(content = result) {
+        if (display.textContent.length > 12) {
+            console.log(display.textContent.length);
+            return;
+        } 
+        display.textContent += content;
 }
 
-function getRounded(number) {
-    return (Math.round(number * 100000000)/100000000);
+function getLimitedNumber(number) {
+    number = number.toString();
+    numLength = number.length;
+    if (numLength <= 12) {
+        return number;
+    }
+    if (numLength > 12) {
+        number = +number;
+        number = number.toExponential(7);
+        return number;
+    }
 }
 
-
+populateDisplay();
 
 
 buttons.forEach((button) => {
@@ -62,7 +76,10 @@ buttons.forEach((button) => {
                 display.textContent = '';
                 flag = 0;
             }
-            let str = display.textContent;
+            if (display.textContent == 0) {
+                display.textContent = '';
+            }
+            
             
             populateDisplay(button.value);
         } else if (button.classList.contains('operator')) {
@@ -73,41 +90,37 @@ buttons.forEach((button) => {
                 if (isNaN(result)) {
                     result = "Wrong format";
                 }
-                result = getRounded(result);
+                result = getLimitedNumber(result);
                 populateDisplay(result);
-                console.log("Result" + result);
                 firstNum = +result;
                 operatorFlag = 0;
             } 
             operator = button.value;
             firstNum = +(display.textContent);
-            console.log(firstNum);
             flag = 1;
             operatorFlag = 1;
         } else if (button.classList.contains('equals')) {
-            secondNum = +(display.textContent);
-            console.log(secondNum);
-            display.textContent = '';
-            result = operate(operator, firstNum, secondNum);
-            if(result === undefined) {
-                result = secondNum;
-            } else if (result === Infinity || result === -Infinity) {
-                result = 'Nice try!';
-            }
-            result = getRounded(result);
-            populateDisplay(result);
-            flag = 0;
-            operatorFlag = 0;
-            result = 0;
-            firstNum = 0;
-            secondNum = 0;
-            
-            
+            if (operatorFlag == 1) {
+                secondNum = +(display.textContent);
+                console.log(secondNum);
+                display.textContent = '';
+                result = operate(operator, firstNum, secondNum);
+                if(result === undefined) {
+                    result = secondNum;
+                } else if (result === Infinity || result === -Infinity) {
+                    result = 'Nice try!';
+                }
+                result = getLimitedNumber(result);
+                populateDisplay(result);
+                flag = 0;
+                operatorFlag = 0;
+            }                      
         } else if (button.classList.contains('clear')) {
             firstNum = 0;
             secondNum = 0;
             result = 0;
             display.textContent = '';
+            populateDisplay();
         }
     });
 });
