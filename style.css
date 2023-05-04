@@ -51,7 +51,7 @@ button {
     font-size: 15px;
 }
 
-.clear {
+.clear, .delete {
     background-color: #F2B6A0;
     border: 1px solid #000;
 }
@@ -61,7 +61,7 @@ button {
     border: 1px solid #000;
 }
 
-.clear:hover {
+.clear:hover, .delete:hover {
     background-color: #F2B6A088;
 }
 

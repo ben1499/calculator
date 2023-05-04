@@ -121,6 +121,13 @@ buttons.forEach((button) => {
             result = 0;
             display.textContent = '';
             populateDisplay();
+        } else if (button.classList.contains('delete')) {
+            if (display.textContent == 0) {
+                return;
+            }
+            let str = display.textContent;
+            str = str.slice(0, str.length - 1);
+            display.textContent = str;
         }
     });
 });
